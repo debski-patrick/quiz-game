@@ -1,0 +1,363 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#__next {
+	min-height: 100vh;
+}
+html {
+	scroll-behavior: smooth;
+}
+dialog::backdrop {
+	backdrop-filter: blur(3px);
+}
+body {
+	transition: all 0.3s ease-in-out;
+	overflow-x: hidden;
+}
+
+.mainHome {
+	background: rgb(28, 35, 58) url('/bg-home.svg');
+	background-size: 70%;
+}
+.disabled {
+	filter: grayscale(1);
+	cursor: not-allowed;
+}
+.progressBar::-webkit-scrollbar {
+	height: 5px;
+}
+.progressBar::after {
+	width: calc((100% / var(--segments)) * var(--current));
+}
+
+/* Pulse animation ============================= */
+.pulse_animation {
+	animation: pulse 1s infinite;
+}
+@keyframes pulse {
+	0% {
+		scale: 1;
+		background: rgb(236, 52, 52);
+		color: white;
+	}
+	50% {
+		scale: 1.1;
+		background: white;
+		color: rgb(236, 52, 52);
+	}
+	100% {
+		scale: 1;
+		background: rgb(236, 52, 52);
+		color: white;
+	}
+}
+
+/* Slides ============================ */
+.slide-left {
+	transform: translateX(-100%);
+	opacity: 0;
+	pointer-events: none;
+}
+.slide-right {
+	transform: translateX(100%);
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Loader ============================ */
+.loader {
+	width: 100px;
+	height: 100px;
+}
+.loader path {
+	fill: #2563eb;
+	transform-origin: center;
+	animation: rotate 1.5s linear infinite;
+}
+.loaderreverse {
+	animation-direction: reverse !important;
+}
+
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
+	from {
+		transform: rotate(0deg);
+	}
+}
+
+/* btn-primary ============================ */
+.btn-primary {
+	transform-style: preserve-3d;
+	transition: all 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+
+.btn-primary::before {
+	border-radius: inherit;
+	transform: translate3d(0, 0.75em, -1em);
+	transition: all 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+
+.btn-primary:hover {
+	background: #5490f1;
+	transform: translate(0, 0.25em);
+}
+.btn-primary:hover::before {
+	transform: translate3d(0, 0.5em, -1em);
+}
+
+.btn-primary:active {
+	background: #cee5ff;
+	transform: translate(0em, 0.75em);
+}
+
+.btn-primary:active::before {
+	transform: translate3d(0, 0, -0.1em);
+}
+.btn-primary:disabled:hover {
+	background: #3b82f6;
+	transform: translate(0, 0);
+}
+.btn-primary:disabled:hover::before {
+	transform: translate3d(0, 0.75em, -1em);
+}
+
+@layer components {
+	.btn-primary {
+		@apply relative tracking-wider font-bold bg-[#3b82f6] text-center text-white rounded-md px-4 py-2 transition-all before:absolute before:w-full before:h-full before:top-[-3px] before:left-0 before:right-0 before:bottom-0 before:bg-[#2563eb];
+	}
+	.wrongAnswer {
+		@apply before:bg-red-700 !bg-[#e11d48];
+	}
+	.correctAnswer {
+		@apply before:bg-green-600 !bg-[#22c55e];
+	}
+}
+
+/* Dialog  ============================ */
+dialog[open] {
+	animation: show 0.3s ease;
+}
+dialog.hide {
+	animation: hide 0.2s ease;
+}
+@keyframes show {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.2);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+@keyframes hide {
+	to {
+		transform: translate(-50%, -50%) scale(0.2);
+		opacity: 0;
+	}
+}
+
+/* Input range  ============================ */
+input[type='range'] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 0.5rem;
+	background: #d1d5db;
+	border-radius: 0.5rem;
+}
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	background: #2563eb;
+}
+input[type='range']:not(:disabled)::-webkit-slider-thumb {
+	cursor: e-resize;
+}
+input[type='range']::-moz-range-thumb {
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	background: #2563eb;
+	cursor: pointer;
+}
+
+/* Scroll ============================ */
+::-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar-track {
+	background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(0deg, #2563eb, #685af5);
+	border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #87adff;
+}
+
+/* Focus ============================ */
+:focus-visible {
+	outline: 5px dashed #0f172a;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+input:focus-visible {
+	opacity: 1;
+}
+
+/* Checkbox ========================= */
+.cbx,
+.cbx2 {
+	position: relative;
+	width: 25px;
+	height: 25px;
+	border: 1px solid #c8ccd4;
+	background: #d1d5db;
+	border-radius: 3px;
+	transition: background 0.1s ease;
+	cursor: pointer;
+	display: block;
+}
+
+.cbx:after,
+.cbx2:after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 8px;
+	width: 7px;
+	height: 14px;
+	opacity: 0;
+	transform: rotate(45deg) scale(0);
+	border-right: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	transition: all 0.3s ease;
+	transition-delay: 0.15s;
+}
+
+.lbl {
+	margin-left: 5px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+#cbx:checked ~ .cbx,
+#cbx2:checked ~ .cbx2 {
+	border-color: transparent;
+	background: #2563eb;
+	animation: jello-vertical 0.3s ease;
+}
+
+#cbx:checked ~ .cbx:after,
+#cbx2:checked ~ .cbx2:after {
+	opacity: 1;
+	transform: rotate(45deg) scale(1);
+}
+
+.cntr {
+	position: absolute;
+	top: -2rem;
+	left: 6.5rem;
+}
+
+/* Animations */
+/* ----------------------------------------------
+  Generated by AnimatiSS
+  Licensed under FreeBSD License
+  URL: https://xsgames.co/animatiss
+  Twitter: @xsgames_
+---------------------------------------------- */
+/* For correct answer */
+.shake-left-right {
+	animation: shake-left-right 0.6s linear both;
+}
+@keyframes shake-left-right {
+	0%,
+	100% {
+		transform: rotate(0deg);
+		transform-origin: 50% 50%;
+	}
+	20% {
+		transform: rotate(8deg);
+	}
+	40% {
+		transform: rotate(-8deg);
+	}
+	60% {
+		transform: rotate(8deg);
+	}
+	80% {
+		transform: rotate(-8deg);
+	}
+}
+/* For wrong answer */
+.vibrate {
+	animation: vibrate 0.3s linear both;
+}
+@keyframes vibrate {
+	0% {
+		transform: translate(0);
+	}
+	20% {
+		transform: translate(-2px, 2px);
+	}
+	40% {
+		transform: translate(-2px, -2px);
+	}
+	60% {
+		transform: translate(2px, 2px);
+	}
+	80% {
+		transform: translate(2px, -2px);
+	}
+	100% {
+		transform: translate(0);
+	}
+}
+/* For title "Quizi" hover */
+.jello-vertical {
+	animation: jello-vertical 0.6s linear both;
+}
+@keyframes jello-vertical {
+	0% {
+		transform: scale3d(1, 1, 1);
+	}
+	30% {
+		transform: scale3d(0.75, 1.25, 1);
+	}
+	40% {
+		transform: scale3d(1.25, 0.75, 1);
+	}
+	50% {
+		transform: scale3d(0.85, 1.15, 1);
+	}
+	65% {
+		transform: scale3d(1.05, 0.95, 1);
+	}
+	75% {
+		transform: scale3d(0.95, 1.05, 1);
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+/* Countdown =================*/
+.countdown {
+	transform: rotateZ(-90deg);
+}
+.countdown circle {
+	stroke-dasharray: 174px;
+	stroke-dashoffset: 0px;
+	stroke-linecap: round;
+	stroke-width: 5px;
+	fill: none;
+}
